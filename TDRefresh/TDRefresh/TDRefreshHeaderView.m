@@ -38,7 +38,7 @@
     //向上滑动不执行下拉刷新方法
     if (_scrollView.contentOffset.y > 0) return;
     //当前拖拽的距离
-    CGFloat distance = fabs(_scrollView.contentOffset.y + _scrollViewOriginalInset.top);
+    CGFloat distance = fabs(_scrollView.contentOffset.y);
     NSLog(@"%f",distance);
     //如果当前状态在刷新中不执行后续方法
     if (self.state == TDRefreshStateRefreshing) return;
@@ -53,7 +53,6 @@
     //松开，如果是准备刷新状态，则刷新
     else {
         if (self.state == TDRefreshStateWillRefresh) {
-            
             [self startRefreshing];
         }
     }
@@ -69,7 +68,7 @@
             self.statusLabel.text = TDRefreshHeaderStateWillRefresh;
             break;
         case TDRefreshStateRefreshing:
-            self.statusLabel.text = TDRefreshStateRefreshingRefresh;
+            self.statusLabel.text = TDRefreshHeaderStateRefreshingRefresh;
             break;
         default:
             break;
@@ -80,9 +79,9 @@
     [super startRefreshing];
     self.state = TDRefreshStateRefreshing;
     UIScrollView *scrollView = _scrollView;
-    UIEdgeInsets edg = _scrollViewOriginalInset;
+    
     [UIView animateWithDuration:0.3 animations:^{
-        CGFloat top = edg.top + self.bounds.size.height;
+        CGFloat top = self.bounds.size.height;
         scrollView.contentInset = UIEdgeInsetsMake(top, 0, 0, 0);
         [scrollView setContentOffset:CGPointMake(0, -top) animated:NO];
     }];
@@ -92,9 +91,9 @@
     [super endRefreshing];
     self.state = TDRefreshStatePulling;
     UIScrollView *scrollView = _scrollView;
-    UIEdgeInsets edg = _scrollViewOriginalInset;
+    
     [UIView animateWithDuration:0.3 animations:^{
-        [scrollView setContentInset:edg];
+        [scrollView setContentInset:UIEdgeInsetsZero];
         self.frame = CGRectMake(0, -refreshHeight, self.bounds.size.width, self.bounds.size.height);
     }];
 }

@@ -54,7 +54,38 @@ static const char TDRefreshFooterViewKey = '\0';
     self.header.refreshingBlock = callback;
 }
 
+/**
+ *  添加一个上拉刷新控件
+ */
+- (void)addAutoFooterWithCallbak:(void (^)(void))callback isAuto:(BOOL)isAuto {
+    if (!self.footer) {
+        TDRefreshFooterView *footer = [TDRefreshFooterView footer];
+        [self addSubview:footer];
+        self.footer = footer;
+    }
+    self.footer.isAuto = isAuto;
+    self.footer.refreshingBlock = callback;
+}
+
+- (void)addFooterWithCallbak:(void (^)(void))callback {
+    [self addAutoFooterWithCallbak:callback isAuto:NO];
+}
+
+
+
+- (void)headerStartRefreshing {
+    [self.header startRefreshing];
+}
+
 - (void)headerEndRefreshing {
     [self.header endRefreshing];
+}
+
+- (void)footerStartRefreshing {
+    [self.header startRefreshing];
+}
+
+- (void)footerEndRefreshing {
+    [self.footer endRefreshing];
 }
 @end

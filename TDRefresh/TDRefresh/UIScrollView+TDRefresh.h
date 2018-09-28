@@ -11,8 +11,14 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface UIScrollView (TDRefresh)
-- (void)addHeaderWithCallback:(void (^)(void))callback;
+- (void)addFooterWithCallbak:(void (^)(void))callback;
+- (void)addAutoFooterWithCallbak:(void (^)(void))callback isAuto:(BOOL)isAuto;
+- (void)footerStartRefreshing;
+- (void)footerEndRefreshing;
 
+
+- (void)addHeaderWithCallback:(void (^)(void))callback;
+- (void)headerStartRefreshing;
 - (void)headerEndRefreshing;
 @end
 

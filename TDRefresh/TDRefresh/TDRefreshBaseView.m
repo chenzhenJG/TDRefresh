@@ -9,6 +9,7 @@
 #import "TDRefreshBaseView.h"
 @interface TDRefreshBaseView() {
     __weak UILabel *_statusLabel;
+    __weak UIActivityIndicatorView *_activityView;
 }
 
 @end
@@ -34,6 +35,18 @@
     }
     return _statusLabel;
 }
+
+- (UIActivityIndicatorView *)activityView
+{
+    if (!_activityView) {
+        UIActivityIndicatorView *activityView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+        activityView.bounds = self.bounds;
+        [self addSubview:_activityView = activityView];
+    }
+    return _activityView;
+}
+
+
 - (instancetype)initWithFrame:(CGRect)frame {
     frame.size.height = refreshHeight;
     frame.size.width = [UIScreen mainScreen].bounds.size.width;
@@ -45,6 +58,7 @@
     return self;
 }
 
+
 - (void)willMoveToSuperview:(UIView *)newSuperview {
     [super willMoveToSuperview:newSuperview];
     if (![newSuperview isKindOfClass:[UIScrollView class]] && newSuperview) {
@@ -53,7 +67,7 @@
     [self removeObservers];
     if (newSuperview) {
         _scrollView = (UIScrollView *)newSuperview;
-        _scrollViewOriginalInset = _scrollView.contentInset;
+        
         [self updateRect];
         [self addObservers];
         

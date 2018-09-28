@@ -10,4 +10,9 @@
 
 static NSString *const TDRefreshHeaderStatePulling = @"下拉刷新";
 static NSString *const TDRefreshHeaderStateWillRefresh = @"你放手就刷新";
-static NSString *const TDRefreshStateRefreshingRefresh = @"正在刷新...";
+static NSString *const TDRefreshHeaderStateRefreshingRefresh = @"正在刷新...";
+
+
+static NSString *const TDRefreshFooterStatePulling = @"上拉刷新";
+static NSString *const TDRefreshFooterStateWillRefresh = @"你放手就刷新";
+static NSString *const TDRefreshFooterStateRefreshingRefresh = @"正在刷新...";

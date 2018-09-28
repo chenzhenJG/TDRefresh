@@ -25,7 +25,7 @@ static NSString *TDRefreshKeyPathContentSize = @"contentSize";
 
 @interface TDRefreshBaseView : UIView {
     __weak UIScrollView *_scrollView;
-    UIEdgeInsets _scrollViewOriginalInset;
+    
 }
 /** 刷新状态 */
 @property (nonatomic,assign) TDRefreshState state;
@@ -33,6 +33,7 @@ static NSString *TDRefreshKeyPathContentSize = @"contentSize";
 @property (nonatomic,strong) TDRefreshingBlock refreshingBlock;
 
 @property (nonatomic, weak, readonly) UILabel *statusLabel;
+@property (nonatomic, weak, readonly) UIActivityIndicatorView *activityView;
 
 //开始刷新
 -(void)startRefreshing NS_REQUIRES_SUPER;
