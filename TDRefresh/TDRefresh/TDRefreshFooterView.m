@@ -22,7 +22,7 @@
 
 - (void)updateRect {
     [super updateRect];
-    self.backgroundColor = [UIColor redColor];
+    
      self.frame = CGRectMake(0,_scrollView.contentSize.height,_scrollView.bounds.size.width, refreshHeight);
     self.activityView.frame = CGRectMake(0, 0, self.bounds.size.width, refreshHeight);
 }
@@ -33,7 +33,12 @@
     CGFloat distance = 0;
     //内容高度小于屏幕高度
     if (_scrollView.contentSize.height < _scrollView.bounds.size.height) {
-        distance = _scrollView.contentOffset.y;
+        CGFloat actionY = _scrollView.contentOffset.y;
+        BOOL action = actionY != refreshHeight && actionY > 0;
+        if (action) {
+            distance = actionY;
+            self.center = CGPointMake(self.center.x, _scrollView.bounds.size.height + distance/2.0f);
+        }
     }else {//否则内容高度大于屏幕高度
         CGFloat targetOffsetY = _scrollView.contentSize.height - _scrollView.bounds.size.height;
         //当前滑动未超过底部
@@ -41,10 +46,12 @@
             return;
         }
         distance = fabs(targetOffsetY - _scrollView.contentOffset.y);
+        self.center = CGPointMake(self.center.x, _scrollView.contentSize.height + distance/2.0f);
     }
     if (self.state == TDRefreshStateRefreshing) {//如果是正在刷新就不执行后续方法
         return;
     }
+    
 //    _scrollViewOriginalInset = _scrollView.contentInset;
     NSLog(@"%f",distance);
     if (self.isAuto) {
@@ -72,7 +79,7 @@
         if (scrollView.contentSize.height < scrollView.bounds.size.height) {
              [scrollView setContentOffset:CGPointMake(0,self.bounds.size.height) animated:false];
         }else{
-            
+             [scrollView setContentOffset:CGPointMake(0, scrollView.contentSize.height - scrollView.bounds.size.height + self.bounds.size.height) animated:false];
         }
     }];
 }
@@ -84,7 +91,7 @@
     [UIView animateWithDuration:0.3 animations:^{
         [scrollView setContentInset:UIEdgeInsetsMake(0, 0, 0, 0)];
         if (scrollView.contentSize.height < scrollView.bounds.size.height) {
-//            self.frame = CGRectMake(0, scrollView.bounds.size.height + refreshHeight, self.bounds.size.width, self.bounds.size.height);
+            self.frame = CGRectMake(0, scrollView.bounds.size.height + refreshHeight, self.bounds.size.width, self.bounds.size.height);
         }else{
             self.frame = CGRectMake(0, scrollView.contentSize.height + refreshHeight, self.bounds.size.width, self.bounds.size.height);
         }

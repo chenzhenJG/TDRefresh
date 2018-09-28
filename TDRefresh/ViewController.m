@@ -38,7 +38,7 @@ _Pragma("clang diagnostic pop") \
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    _count = 5;
+    _count = 20;
     [self.view addSubview:self.tableview];
     adjustsScrollViewInsets_NO(self.tableview, self);
      __unsafe_unretained typeof(self) vc = self;
